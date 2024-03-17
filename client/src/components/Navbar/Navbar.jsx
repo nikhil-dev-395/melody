@@ -46,7 +46,7 @@ const Navbar = () => {
             <div className="flex justify-around bg-black text-white max-w-[90%] h-20  mx-auto items-center  font-sans">
                 <Link className="" to="/">
                     <h1
-                        className="flex items-center font-mono font-bold shadow-xl py-3 "
+                        className="flex items-center font-mono font-bold shadow-xl py-3 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400  text-transparent bg-clip-text"
                     >
                         <MdAudiotrack className=" text-xl text-purple-500 " />
                         melody
@@ -68,9 +68,13 @@ const Navbar = () => {
                 </ul>
 
                 <ul className="flex items-center gap-9">
-                    <li className="bg-white text-black py-2 px-3 rounded-md">
+                    <li className="bg-white hover:bg-gradient-to-t from-indigo-400 to-pink-400 text-black py-2 px-3 rounded-md">
                         <button>
                             <Link to='/login'>Login</Link>
+                        </button>
+                    </li> <li className="bg-white hover:bg-gradient-to-t from-indigo-400 to-pink-400 text-black py-2 px-3 rounded-md">
+                        <button>
+                            <Link to='/register'>register</Link>
                         </button>
                     </li>
                     <li className="text-white text-[30px] ml-14">
