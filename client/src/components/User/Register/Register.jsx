@@ -1,7 +1,35 @@
+import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import axios from "axios"
 
 const Register = () => {
+
+    const [name, setName] = useState()
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        RegisterUser();
+    }
+    const RegisterUser = async () => {
+
+        try {
+            const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                name, email, password
+            });
+
+            let res = await response.data;
+            console.log(res);
+
+        } catch (error) {
+            console.log("Error", error);
+        }
+
+    }
+
+
     return (
         <>
 
@@ -22,17 +50,27 @@ const Register = () => {
                 {/* right */}
                 <div className="  w-full h-full py-2 px-14">
 
-                    <form className="  ">
+                    <form className="  " onSubmit={handleSubmit}>
 
                         <label htmlFor="name  " className="block">name</label>
-                        <input type="text" name="name" placeholder="  enter your name " className="border  outline-none border-slate-800 w-80 px-5 py-3" required />
+                        <input type="text" name="name" placeholder="  enter your name " className="border  outline-none border-slate-800 w-80 px-5 py-3" required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+
+                        />
 
 
                         <label htmlFor="email  " className="block mt-3">email</label>
-                        <input type="text" name="email" placeholder="  enter your email " className="border  outline-none border-slate-800 w-80 px-5 py-3 " required />
+                        <input type="email" name="email" placeholder="  enter your email " className="border  outline-none border-slate-800 w-80 px-5 py-3 " required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
 
                         <label htmlFor="password  " className="block mt-3">password</label>
-                        <input type="text" name="password" placeholder="  enter your password " className="border outline-none border-slate-800 w-80 px-5 py-3" required />
+                        <input type="password" name="password" placeholder="  enter your password " className="border outline-none border-slate-800 w-80 px-5 py-3" required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
 
                         <button className="bg-black text-white block mt-3 px-4 py-2 w-1/2 "> sign up</button>
                     </form>
@@ -40,7 +78,7 @@ const Register = () => {
 
                     <h2 className="text-center py-3">OR</h2>
 
-                    <button className="flex items-center gap-4 border border-black px-4 py-2 w-[80%] justify-center"> <span><FcGoogle /></span> continue with google</button>
+                    <button className="flex items-center gap-4 border border-black px-4 py-2 w-[80%] justify-center" onClick={RegisterUser}> <span><FcGoogle /></span> continue with google</button>
 
                 </div>
             </main>

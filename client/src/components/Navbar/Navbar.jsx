@@ -62,7 +62,7 @@ const Navbar = () => {
                             key={item.id}
 
                         >
-                            <NavLink to={item.linkAddress} activeStyle={{ fontWeight: 'bold', color: 'red' }} className="flex items-center gap-2 w-full h-full">
+                            <NavLink to={item.linkAddress} className="flex items-center gap-2 w-full h-full">
                                 {item.icon}
                             </NavLink>
                         </li>
@@ -76,7 +76,7 @@ const Navbar = () => {
                         </button>
                     </li> <li className="bg-white hover:bg-gradient-to-t from-indigo-400  to-pink-400 text-black py-2 px-3 rounded-md">
                         <button>
-                            <Link to='/register' className="py-4">register</Link>
+                            <Link to='/register' className="py-4">Register</Link>
                         </button>
                     </li>
                     <li className="bg-white hover:bg-gradient-to-t from-indigo-400  to-pink-400 text-black py-2 px-3 rounded-md">

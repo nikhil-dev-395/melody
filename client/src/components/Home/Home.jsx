@@ -57,7 +57,9 @@ const Home = () => {
 
         return (
             <Link to={toPlaylist} key={index}>
-                <li className="max-w-56 max-h-72 bg-black rounded-md p-3 hover:cursor-pointer group relative shadow-indigo-300 shadow-2xl mx-[22px] my-6 text-white" >
+                <li className="max-w-56 max-h-72 bg-black rounded-md p-3 hover:cursor-pointer group relative shadow-indigo-300 shadow-2xl mx-[22px] my-6 text-white  
+                hover:scale-110 duration-300
+                " >
                     <img
                         src={image}
                         alt="image"

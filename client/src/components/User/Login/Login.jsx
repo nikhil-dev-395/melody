@@ -1,7 +1,36 @@
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios"
+import { useState } from "react";
 
 const Login = () => {
+
+    const navigate = useNavigate()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    axios.defaults.withCredentials = true;
+    let handleSubmit = (event) => {
+        event.preventDefault();
+    }
+
+    function signIN() {
+        console.log(email, password);
+
+        axios.post("http://localhost:3000/api/v1/user/signin", {
+            email, password
+        }).then(data => {
+            console.log(data)
+            if (data.statusText == "OK") {
+                navigate("/")
+            }
+
+        }).catch(err => { console.log(err) })
+
+
+    }
+
+
     return (
         <>
 
@@ -22,15 +51,22 @@ const Login = () => {
                 {/* right */}
                 <div className="  w-full h-full py-2 px-14">
 
-                    <form className="  ">
+                    <form className="  " onSubmit={handleSubmit}>
 
                         <label htmlFor="email  " className="block">email</label>
-                        <input type="text" name="email" placeholder="  enter your email " className="border  outline-none border-slate-800 w-80 px-5 py-3" required />
+                        <input type="email" name="email" placeholder="  enter your email " className="border  outline-none border-slate-800 w-80 px-5 py-3" required
+                            onChange={e => setEmail(e.target.value)}
+                        />
 
                         <label htmlFor="password  " className="block mt-5">password</label>
-                        <input type="text" name="password" placeholder="  enter your password " className="border outline-none border-slate-800 w-80 px-5 py-3" required />
+                        <input type="password" name="password" placeholder="  enter your password " className="border outline-none border-slate-800 w-80 px-5 py-3" required
+                            onChange={e => setPassword(e.target.value)}
 
-                        <button className="bg-black text-white block mt-5 px-4 py-2 w-1/2 "> sign in</button>
+                        />
+
+                        <button className="bg-black text-white block mt-5 px-4 py-2 w-1/2 "
+                            onClick={signIN}
+                        > sign in</button>
                     </form>
 
 
