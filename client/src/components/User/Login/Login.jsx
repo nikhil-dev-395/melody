@@ -1,6 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"
 import { useState } from "react";
 
 const Login = () => {
@@ -9,25 +8,9 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    axios.defaults.withCredentials = true;
     let handleSubmit = (event) => {
         event.preventDefault();
-    }
-
-    function signIN() {
         console.log(email, password);
-
-        axios.post("http://localhost:3000/api/v1/user/signin", {
-            email, password
-        }).then(data => {
-            console.log(data)
-            if (data.statusText == "OK") {
-                navigate("/")
-            }
-
-        }).catch(err => { console.log(err) })
-
-
     }
 
 
@@ -65,7 +48,7 @@ const Login = () => {
                         />
 
                         <button className="bg-black text-white block mt-5 px-4 py-2 w-1/2 "
-                            onClick={signIN}
+                            type="submit"
                         > sign in</button>
                     </form>
 

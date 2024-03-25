@@ -90,7 +90,7 @@ const Home = () => {
                     <ul className="flex flex-wrap px-24 gap-5">
 
                         {
-                            sampleData.map((data) => (box(data)))
+                            sampleData.map((data, index) => (box(data, index)))
                         }
 
                     </ul>

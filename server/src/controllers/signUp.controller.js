@@ -2,36 +2,32 @@ import {userModel} from "../models/user.model.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-const signUp = async(req,res) => {
-    let { name, email, password } = req.body;
+const signUp = async (req, res) => {
     try {
-
-        // checking we 
-        if (!name || !email||!password) {
-            res.send({ message: "please enter name,email,password" });
-
-        };
-
-        //checking if user is existed or not
-
-        const existUser = await userModel.findOne({ email });
-        if (existUser) {
-          return  res.send("user already existed")
+        let {name, email, password } = req.body;
+        
+        if (!name || !email || !password) {
+            res.status(400).json({message:"please enter name,email  &  password  correctly"})
         }
-
-
-
-        const hashPassword = await bcrypt.hash(password, 10);
-         
-        if (name || email || password) {
-            let user = await userModel.create({ name, email, password: hashPassword });
-            let saveUser = await user.save();
-            res.send(saveUser)
-        }
-       
+        
+        let user = new userModel({
+            name, email, password
+        });
+        let response = await user.save();
+        res.status(201).json({ message: "user registered successfully", response });
+        console.log(response);
     } catch (error) {
-        console.log("error in signup", res.send({ error }));
-        res.status(400).send({message:"internal server error",error})
+        res.status(500).json({
+            message: "internal server error",
+            success: false,
+            error: error,
+            errorMessage: error.message
+        });
+
+        if (error.code === 11000) {
+            // console.log("hello error");
+            process.exit(1);
+        }
     }
 }
 export {signUp}
