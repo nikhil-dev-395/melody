@@ -1,21 +1,40 @@
+import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config({
-    path:"./src/config/config.env"
-})
-import {app} from "./app.js"
-import { dbConnect } from "./src/db/dbConnect.db.js";
+dotenv.config();
+import cookieParser from "cookie-parser";
+const app = express();
 const port = process.env.PORT;
 
+//importing files here ...
+import { dbConnect } from "./src/db/dbConnect.db.js";
+import { userRouter } from "./src/routes/User.routes.js";
 
-const startServer =async () => {
-   try {
-    await dbConnect()
-     await app.listen(port, () => {
-        console.log("server is listening on "+port);
-    })
-   
-   } catch (error) {
-    console.log("server error",error);
-   }
-}
-startServer()
+//middlewares
+app.use(cookieParser());
+app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+
+/*  ROUTE   */ 
+app.use("/user", userRouter);
+
+/*  STARTING SERVER */ 
+const startServer = async () => {
+  try {
+    await dbConnect();
+    await app.listen(port, () => {
+      console.log(`server is listening on ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+startServer();

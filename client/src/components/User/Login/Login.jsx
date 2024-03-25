@@ -1,17 +1,37 @@
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Login = () => {
-
+    useEffect(() => {
+        let auth = localStorage.getItem("User");
+        if (auth) {
+            navigate("/");
+        }
+    }, []);
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    let handleSubmit = (event) => {
+    let handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(email, password);
+        // console.log(email, password);
+        axios.post("http://localhost:3000/user/login", { email, password }).then(res => {
+            console.log(res);
+            navigate("/")
+            if (res) {
+                localStorage.setItem("User", JSON.stringify(res.data.user));
+                localStorage.setItem("Token", JSON.stringify(res.data.token));
+            }
+        }).catch(error => {
+            console.log(error);
+            if (error.response.status == 404) {
+                alert("user not found !")
+            }
+        })
     }
+
 
 
     return (
@@ -53,9 +73,9 @@ const Login = () => {
                     </form>
 
 
-                    <h2 className="text-center py-3">OR</h2>
+                    {/* <h2 className="text-center py-3">OR</h2> */}
 
-                    <button className="flex items-center gap-4 border border-black px-4 py-2 w-[80%] justify-center"> <span><FcGoogle /></span> continue with google</button>
+                    {/* <button className="flex items-center gap-4 border border-black px-4 py-2 w-[80%] justify-center"> <span><FcGoogle /></span> continue with google</button> */}
 
                 </div>
             </main>
@@ -65,3 +85,4 @@ const Login = () => {
 }
 
 export default Login
+
